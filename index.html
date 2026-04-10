@@ -1,36 +1,564 @@
-POSH — Sales Manager View,,,,
-Auto-updates from rep sheets. Do not edit this tab.,,,,
-,,,,
-MEMBERSHIP REVENUE ($),,,,
-Week,Hayden,Jessica,Abdul + Others,COMBINED
-Wk1 Mar1-9,"$3,588.00",$0.00,$0.00,"$3,588.00"
-Wk2 Mar9-15,"$2,388.00",$0.00,"$7,758.00","$10,146.00"
-Wk3 Mar16-22,"$2,388.00","$4,776.00","$2,500.00","$9,664.00"
-Wk4 Mar23-29,$0.00,"$14,364.00","$5,000.00","$19,364.00"
-Wk5 Mar30-Apr5,"$9,576.00","$3,000.00","$9,200.00","$21,776.00"
-Wk6 Apr6-12,"$2,500.00",$0.00,$0.00,"$2,500.00"
-Wk7 Apr13-19,$0.00,$0.00,$0.00,$0.00
-Wk8 April 20 - 27,,,,
-RENTAL REVENUE ($),,,,
-Week,Hayden,Jessica,Abdul + Others,COMBINED
-Wk1 Mar1-9,"$2,798.00",$0.00,"$1,500.00","$4,298.00"
-Wk2 Mar9-15,"$4,039.08",$0.00,"$3,179.75","$7,218.83"
-Wk3 Mar16-22,"$4,433.85",$531.25,"$3,096.50","$8,061.60"
-Wk4 Mar23-29,"$1,593.75",$0.00,"$1,480.00","$3,073.75"
-Wk5 Mar30-Apr5,$371.87,$100.00,"$8,490.00","$8,961.87"
-Wk6 Apr6-12,"$3,600.00",$0.00,"$1,300.00","$4,900.00"
-Wk7 Apr13-19,$0.00,$0.00,$0.00,$0.00
-,,,,
-TOTAL REVENUE ($),,,,
-Week,Hayden,Jessica,Abdul + Others,COMBINED
-Wk1 Mar1-9,"$6,386.00",$0.00,"$1,500.00","$7,886.00"
-Wk2 Mar9-15,"$6,427.08",$0.00,"$10,937.75","$17,364.83"
-Wk3 Mar16-22,"$6,821.85","$5,307.25","$5,596.50","$17,725.60"
-Wk4 Mar23-29,"$1,593.75","$14,364.00","$6,480.00","$22,437.75"
-Wk5 Mar30-Apr5,"$9,947.87","$3,100.00","$17,690.00","$30,737.87"
-Wk6 Apr6-12,"$6,100.00",$0.00,"$1,300.00","$7,400.00"
-Wk7 Apr13-19,$0.00,$0.00,$0.00,$0.00
-,,,,
-GRAND TOTAL — ALL WEEKS,"$37,276.55","$22,771.25","$43,504.25","$103,552.05"
-,,,,
-"⚠  DATA FLAGS: Hayden Wk1/Wk2 — Fara Pooler, Tonya Evans (Feb 26), Dewey Evans (Mar 3), Orisaemeka Onyenke (Mar 4), Tyler Thompson (Mar 7) flagged amber — dates outside stated period. Verify.",,,,
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:var(--color-background-tertiary,#f5f5f0);color:var(--color-text-primary);min-height:100vh}
+.hdr{background:var(--color-background-primary);border-bottom:.5px solid var(--color-border-tertiary);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:9px}
+.lm{width:30px;height:30px;background:#1a1a1a;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.lt{font-size:15px;font-weight:500}.ls{font-size:11px;color:var(--color-text-secondary)}
+.btn-add{background:#1a1a1a;color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
+.btn-add:hover{background:#333}
+.wrap{padding:20px 22px;max-width:1200px;margin:0 auto}
+.tabs{display:flex;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:18px}
+.tab{padding:9px 15px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-.5px}
+.tab.on{color:var(--color-text-primary);border-bottom-color:#1a1a1a;font-weight:500}
+.sec{display:none}.sec.on{display:block}
+.slabel{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.8px;margin:22px 0 10px}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px}
+.kc{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:12px;padding:14px 15px}
+.kl{font-size:11px;color:var(--color-text-secondary);margin-bottom:5px}
+.kv{font-size:24px;font-weight:500;line-height:1;margin-bottom:5px}
+.kd{font-size:11px;display:flex;align-items:center;gap:4px}
+.up{color:#2d8a4e}.dn{color:#b83232}.nt{color:var(--color-text-secondary)}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dot-up{background:#2d8a4e}.dot-dn{background:#b83232}.dot-nt{background:#888}
+.pill{display:inline-block;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:500}
+.p-up{background:#e8f5ee;color:#1d6e3d}.p-dn{background:#fdeaea;color:#8b2020}
+.p-wn{background:#faeeda;color:#854f0b}.p-nt{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.ct{font-size:14px;font-weight:500}.cs{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px}
+.t{width:100%;border-collapse:collapse}
+.t th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:left;padding:0 8px 8px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.t th:last-child,.t td:last-child{text-align:right;padding-right:0}
+.t td{font-size:13px;padding:8px 8px 8px 0;border-bottom:.5px solid var(--color-border-tertiary);vertical-align:middle}
+.t tr:last-child td{border-bottom:none}
+.muted{background:var(--color-background-secondary)}
+.fr{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:13px}
+.fr:last-child{border-bottom:none}
+.fi{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;margin-top:1px}
+.fi-r{background:#fdeaea;color:#8b2020}.fi-a{background:#faeeda;color:#854f0b}.fi-g{background:#e8f5ee;color:#1d6e3d}
+.ft{font-weight:500;margin-bottom:2px}.fb{color:var(--color-text-secondary);font-size:12px;line-height:1.5}
+.trow{display:flex;gap:5px}
+.tbtn{padding:5px 11px;border-radius:20px;border:.5px solid var(--color-border-tertiary);background:transparent;color:var(--color-text-secondary);font-size:11px;font-weight:500;cursor:pointer}
+.tbtn.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center}
+.modal.on{display:flex}
+.mbox{background:var(--color-background-primary);border-radius:16px;padding:24px;width:460px;max-width:95vw;border:.5px solid var(--color-border-tertiary);max-height:90vh;overflow-y:auto}
+.mtitle{font-size:15px;font-weight:500;margin-bottom:4px}
+.msub{font-size:12px;color:var(--color-text-secondary);margin-bottom:18px}
+.fl{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px;display:block}
+.fi2{width:100%;padding:8px 11px;border:.5px solid var(--color-border-secondary);border-radius:8px;font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.fi2:focus{outline:none;border-color:#1a1a1a}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.frow{margin-bottom:13px}
+.mact{display:flex;gap:8px;margin-top:18px}
+.bcanc{flex:1;padding:9px;border:.5px solid var(--color-border-secondary);background:transparent;border-radius:8px;font-size:13px;cursor:pointer;color:var(--color-text-primary)}
+.bsave{flex:2;padding:9px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer}
+.es{text-align:center;padding:32px;color:var(--color-text-secondary);font-size:13px}
+@media(max-width:700px){.g2,.g3{grid-template-columns:1fr}.kg{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">PoshCars marketing dashboard with 2026 Meta ad data and daily number entry</h2>
+
+<div class="hdr">
+  <div class="logo">
+    <div class="lm"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M3 11.5C3 11.5 4.5 8 9 8c4.5 0 6 3.5 6 3.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><rect x="2" y="11" width="14" height="3.5" rx="1.5" fill="#fff" opacity=".9"/><circle cx="5.5" cy="14.5" r="1" fill="#fff"/><circle cx="12.5" cy="14.5" r="1" fill="#fff"/></svg></div>
+    <div><div class="lt">PoshCars</div><div class="ls">Marketing Dashboard</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span id="rdate" style="font-size:12px;color:var(--color-text-secondary)"></span>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs">
+    <div class="tab on" onclick="switchTab('overview',this)">Overview</div>
+    <div class="tab" onclick="switchTab('revenue',this)">Revenue</div>
+    <div class="tab" onclick="switchTab('meta',this)">Meta ads</div>
+    <div class="tab" onclick="switchTab('fleet',this)">Fleet</div>
+    <div class="tab" onclick="switchTab('flags',this)">Flags</div>
+    <div class="tab" onclick="switchTab('sales',this)">Sales</div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="sec-overview" class="sec on">
+    <div class="slabel">Marketing ROI — 2025 actuals</div>
+    <div class="kg">
+      <div class="kc"><div class="kl">Marketing spend</div><div class="kv">$29.5K</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">2025 full year</span></div></div>
+      <div class="kc"><div class="kl">Setup fee revenue</div><div class="kv">$134K</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">2025 full year</span></div></div>
+      <div class="kc"><div class="kl">Marketing ROI</div><div class="kv">4.54x</div><div class="kd"><span class="dot dot-up"></span><span class="up">Outperforms peers</span></div></div>
+      <div class="kc"><div class="kl">Gross profit on mktg</div><div class="kv">$104.5K</div><div class="kd"><span class="dot dot-up"></span><span class="up">78% margin</span></div></div>
+      <div class="kc"><div class="kl">Avg setup fee 2025</div><div class="kv">$2,168</div><div class="kd"><span class="dot dot-up"></span><span class="up">+$253 in 2026 YTD</span></div></div>
+      <div class="kc"><div class="kl">Avg setup fee 2026</div><div class="kv">$2,421</div><div class="kd"><span class="dot dot-up"></span><span class="up">+11.7% YoY</span></div></div>
+    </div>
+    <div class="slabel">2025 vs 2026 YTD — setup fee revenue</div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><div><div class="ct">2025 full year</div><div class="cs">171 transactions · 134 customers</div></div></div>
+        <table class="t"><thead><tr><th>Quarter</th><th>Txns</th><th>Revenue</th></tr></thead><tbody>
+          <tr><td>Q1 2025</td><td>24</td><td>$48,869</td></tr>
+          <tr><td>Q2 2025</td><td>46</td><td>$105,662</td></tr>
+          <tr><td>Q3 2025</td><td>44</td><td>$80,986</td></tr>
+          <tr><td style="font-weight:500">Q4 2025</td><td style="font-weight:500">57</td><td style="font-weight:500">$135,227</td></tr>
+          <tr><td style="font-weight:500">Total</td><td style="font-weight:500">171</td><td style="font-weight:500">$370,744</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card">
+        <div class="ch"><div><div class="ct">2026 YTD (Jan–Apr 10)</div><div class="cs">49 transactions · 39 customers</div></div></div>
+        <table class="t"><thead><tr><th>Month</th><th>Txns</th><th>Revenue</th><th>vs 2025</th></tr></thead><tbody>
+          <tr><td>January</td><td>15</td><td>$37,930</td><td><span class="pill p-up">+69%</span></td></tr>
+          <tr><td>February</td><td>10</td><td>$16,014</td><td><span class="pill p-dn">-19%</span></td></tr>
+          <tr><td>March</td><td>20</td><td>$51,980</td><td><span class="pill p-up">+285%</span></td></tr>
+          <tr><td>April (partial)</td><td>4</td><td>$12,688</td><td><span class="pill p-dn">-55%</span></td></tr>
+          <tr><td style="font-weight:500">YTD Total</td><td style="font-weight:500">49</td><td style="font-weight:500">$118,612</td><td><span class="pill p-wn">-4% ann.</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="slabel">Benchmark — marketing ROI vs industry</div>
+    <div class="card">
+      <table class="t"><thead><tr><th>Company / segment</th><th>Model</th><th>Mktg spend ratio</th><th>Return multiple</th></tr></thead><tbody>
+        <tr><td style="font-weight:500">PoshCars (2025)</td><td>Car subscription</td><td>22% of setup rev</td><td><span class="pill p-up">4.54x</span></td></tr>
+        <tr><td>Fair.com</td><td>Car subscription</td><td>40–80% of revenue</td><td><span class="pill p-dn">1.2x–2.5x</span></td></tr>
+        <tr style="background:var(--color-background-secondary)"><td style="font-weight:500">Flexcar <span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">(active · East Coast)</span></td><td>Month-to-month flex lease <span style="font-size:11px;color:var(--color-text-secondary)">200M mi · 200+ models · ATL, BOS, CLT, NSH</span></td><td>Not disclosed <span style="font-size:11px;color:var(--color-text-secondary)">no public financials</span></td><td><span class="pill p-nt">Unknown</span></td></tr>
+        <tr style="background:var(--color-background-secondary)"><td style="font-weight:500">Turo <span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">(2023 S-1)</span></td><td>P2P car marketplace</td><td>~60% of revenue <span style="font-size:11px;color:var(--color-text-secondary)">$179M S&M / $298M rev</span></td><td><span class="pill p-wn">1.7x — marketplace model</span></td></tr>
+        <tr><td>Autonomy (EV sub)</td><td>EV subscription</td><td>~35% of revenue</td><td><span class="pill p-wn">2x–3x</span></td></tr>
+        <tr><td>Hertz / Avis</td><td>Fleet rental</td><td>3–5% of revenue</td><td><span class="pill p-nt">Brand-driven</span></td></tr>
+        <tr><td>Enterprise Fleet</td><td>Fleet mgmt</td><td>~10% of revenue</td><td><span class="pill p-up">4x–6x</span></td></tr>
+        <tr><td>SaaS industry avg</td><td>Subscription</td><td>15–25% of revenue</td><td><span class="pill p-up">4x–7x</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- REVENUE -->
+  <div id="sec-revenue" class="sec">
+    <div class="slabel">Revenue by plan tier</div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><div><div class="ct">2025 — by plan tier</div><div class="cs">$370,744 total</div></div></div>
+        <table class="t"><thead><tr><th>Plan</th><th>Txns</th><th>Revenue</th><th>Avg fee</th></tr></thead><tbody>
+          <tr><td>POSH</td><td>46</td><td>$152,521</td><td>$3,316</td></tr>
+          <tr><td>LUXURY</td><td>82</td><td>$140,729</td><td>$1,716</td></tr>
+          <tr><td>PLUSH</td><td>28</td><td>$62,917</td><td>$2,247</td></tr>
+          <tr><td>Other</td><td>15</td><td>$14,577</td><td>—</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card">
+        <div class="ch"><div><div class="ct">2026 YTD — by plan tier</div><div class="cs">$118,612 total</div></div></div>
+        <table class="t"><thead><tr><th>Plan</th><th>Txns</th><th>Revenue</th><th>Avg fee</th></tr></thead><tbody>
+          <tr><td>POSH</td><td>7</td><td>$32,352</td><td style="font-weight:500;color:#2d8a4e">$4,622</td></tr>
+          <tr><td>LUXURY</td><td>31</td><td>$66,914</td><td>$2,159</td></tr>
+          <tr><td>PLUSH</td><td>9</td><td>$17,788</td><td>$1,976</td></tr>
+          <tr><td>Other</td><td>2</td><td>$1,559</td><td>—</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="slabel">Payment method mix</div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><div><div class="ct">2025 payment methods</div></div></div>
+        <table class="t"><thead><tr><th>Method</th><th>Revenue</th><th>Share</th></tr></thead><tbody>
+          <tr><td>Stripe</td><td>$169,094</td><td><span class="pill p-up">45.6%</span></td></tr>
+          <tr><td style="color:#b83232;font-weight:500">Cash</td><td style="color:#b83232">$133,173</td><td><span class="pill p-dn">35.9% !</span></td></tr>
+          <tr><td>Clover</td><td>$36,996</td><td>10.0%</td></tr>
+          <tr><td>Zelle</td><td>$9,253</td><td>2.5%</td></tr>
+          <tr><td>Credits/Trade-ins</td><td>$13,964</td><td>3.8%</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card">
+        <div class="ch"><div><div class="ct">2026 YTD payment methods</div></div></div>
+        <table class="t"><thead><tr><th>Method</th><th>Revenue</th><th>Share</th></tr></thead><tbody>
+          <tr><td>Stripe</td><td>$66,070</td><td><span class="pill p-up">55.7%</span></td></tr>
+          <tr><td style="color:#b83232;font-weight:500">Cash</td><td style="color:#b83232">$31,270</td><td><span class="pill p-wn">26.4% !</span></td></tr>
+          <tr><td>Clover</td><td>$15,284</td><td>12.9%</td></tr>
+          <tr><td>Zelle</td><td>$5,988</td><td>5.0%</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="slabel">Unique customers per month</div>
+    <div class="card">
+      <table class="t"><thead><tr><th>Month</th><th>2025 customers</th><th>2025 revenue</th><th>2026 customers</th><th>2026 revenue</th><th>Change</th></tr></thead><tbody>
+        <tr><td>January</td><td>5</td><td>$22,464</td><td>12</td><td>$37,930</td><td><span class="pill p-up">+140%</span></td></tr>
+        <tr><td>February</td><td>8</td><td>$12,913</td><td>6</td><td>$16,014</td><td><span class="pill p-dn">-25%</span></td></tr>
+        <tr><td>March</td><td>7</td><td>$13,492</td><td>18</td><td>$51,980</td><td><span class="pill p-up">+157%</span></td></tr>
+        <tr><td>April</td><td>11</td><td>$28,030</td><td>4</td><td>$12,688</td><td><span class="pill p-dn">-64%</span></td></tr>
+        <tr><td>May 2025</td><td>19</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- META ADS -->
+  <div id="sec-meta" class="sec">
+    <div class="slabel">2025 full year Meta spend — confirmed Jan 1 to Dec 31</div>
+    <div class="kg" style="margin-bottom:14px">
+      <div class="kc"><div class="kl">Total 2025 Meta spend</div><div class="kv">$56,704</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">Jan 1 – Dec 31, 2025</span></div></div>
+      <div class="kc"><div class="kl">Total 2025 results</div><div class="kv">5,803</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">leads, conv, engagements</span></div></div>
+      <div class="kc"><div class="kl">2025 Meta vs setup rev</div><div class="kv">6.54x</div><div class="kd"><span class="dot dot-up"></span><span class="up">$370.7K / $56.7K</span></div></div>
+      <div class="kc"><div class="kl">2026 YTD Meta spend</div><div class="kv">$16,824</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">Jan 1 – Apr 9, 2026</span></div></div>
+    </div>
+
+    <div class="slabel">Meta spend by quarter — 2025</div>
+    <div class="card" style="margin-bottom:14px">
+      <div style="position:relative;width:100%;height:200px;margin-bottom:16px"><canvas id="metaSpendChart" role="img" aria-label="Bar chart of 2025 Meta spend by quarter"></canvas></div>
+      <table class="t"><thead><tr><th>Period</th><th>Campaigns active</th><th>Approx spend</th><th>Key campaigns</th></tr></thead><tbody>
+        <tr><td style="font-weight:500">Q1 2025 (Mar only)</td><td>4</td><td>~$9,800</td><td>LS Web Leads, LS Posh Warmup</td></tr>
+        <tr><td style="font-weight:500">Q2 2025</td><td>18</td><td>~$12,200</td><td>Web Lead ABO, LAL campaigns, New LP tests</td></tr>
+        <tr><td style="font-weight:500">Q3 2025</td><td>20</td><td>~$18,900</td><td>Carousel Relaunch ($5.6K), All Lookalikes ($2.6K), 30% Discount</td></tr>
+        <tr><td style="font-weight:500">Q4 2025</td><td>18</td><td>~$15,800</td><td>Survey Best Ads ($8.4K), Holiday Offer ($3.7K), B2B Funnel ($2.5K)</td></tr>
+        <tr><td style="font-weight:500">2025 Total</td><td>—</td><td style="font-weight:500">$56,704</td><td>—</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="slabel">Top 10 spenders — 2025 campaigns</div>
+    <div class="card" style="margin-bottom:14px">
+      <table class="t"><thead><tr><th>Campaign</th><th>Spend</th><th>Results</th><th>CPR</th><th>Verdict</th></tr></thead><tbody>
+        <tr><td style="font-weight:500">Survey Best Performing Ads</td><td style="font-weight:500">$8,445</td><td>284</td><td>$29.74</td><td><span class="pill p-dn">Expensive</span></td></tr>
+        <tr><td style="font-weight:500">Carousel Relaunch Source</td><td style="font-weight:500">$5,612</td><td>260</td><td>$21.58</td><td><span class="pill p-wn">High freq (4.1)</span></td></tr>
+        <tr><td style="font-weight:500">30% OFF LP Lookalikes</td><td style="font-weight:500">$4,365</td><td>183</td><td>$23.85</td><td><span class="pill p-wn">High freq (3.8)</span></td></tr>
+        <tr><td style="font-weight:500">LS Web Leads (Apr)</td><td>$4,988</td><td>478</td><td style="color:#2d8a4e">$10.44</td><td><span class="pill p-up">Best CPL 2025</span></td></tr>
+        <tr><td style="font-weight:500">LS Web Leads (Mar)</td><td>$4,221</td><td>412</td><td style="color:#2d8a4e">$10.24</td><td><span class="pill p-up">Best CPL 2025</span></td></tr>
+        <tr><td style="font-weight:500">B2B Funnel LP</td><td>$2,495</td><td>50</td><td style="color:#b83232">$49.90</td><td><span class="pill p-dn">Worst CPR</span></td></tr>
+        <tr><td style="font-weight:500">All Lookalikes Sep</td><td>$2,562</td><td>183</td><td>$14.00</td><td><span class="pill p-up">Solid</span></td></tr>
+        <tr><td style="font-weight:500">Adv+ Best Creative Jun</td><td>$2,136</td><td>732</td><td style="color:#2d8a4e">$2.92</td><td><span class="pill p-up">Most results</span></td></tr>
+        <tr><td style="font-weight:500">New Zip Code Oct</td><td>$2,010</td><td>33</td><td style="color:#b83232">$60.92</td><td><span class="pill p-dn">Poor efficiency</span></td></tr>
+        <tr><td style="font-weight:500">Holiday Offer LP Dec</td><td>$3,711</td><td>142</td><td>$26.14</td><td><span class="pill p-wn">High freq (3.4)</span></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="slabel">2025 vs 2026 — Meta efficiency comparison</div>
+    <div class="card" style="margin-bottom:14px">
+      <table class="t"><thead><tr><th>Metric</th><th>2025 full year</th><th>2026 YTD (Jan–Apr)</th><th>Trend</th></tr></thead><tbody>
+        <tr><td>Total spend</td><td>$56,704</td><td>$16,824</td><td><span class="pill p-nt">Annualizing ~$50.5K</span></td></tr>
+        <tr><td>Setup fee revenue</td><td>$370,744</td><td>$118,612</td><td><span class="pill p-wn">-4% ann. YoY</span></td></tr>
+        <tr><td>Meta ROI on setup fees</td><td>6.54x</td><td style="font-weight:500;color:#2d8a4e">7.06x</td><td><span class="pill p-up">Improving</span></td></tr>
+        <tr><td>Best CPL achieved</td><td>$2.92 (Adv+)</td><td style="color:#2d8a4e;font-weight:500">$9.05 (You Just Need to Swap)</td><td><span class="pill p-wn">Higher floor in 2026</span></td></tr>
+        <tr><td>Worst CPR</td><td>$309 (Creatives Testing Jul)</td><td>$58.24 (IG Video)</td><td><span class="pill p-up">Much cleaner</span></td></tr>
+        <tr><td>QuickBooks total mktg spend</td><td>$29,500</td><td>Unknown — pull QB</td><td><span class="pill p-nt">Note: QB 2025 was $27.2K less than Meta alone</span></td></tr>
+      </tbody></table>
+    </div>
+    <div class="kg" style="margin-bottom:14px">
+      <div class="kc"><div class="kl">Total 2026 YTD spend</div><div class="kv">$16,824</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">Jan 1 – Apr 9</span></div></div>
+      <div class="kc"><div class="kl">Total results</div><div class="kv">575</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">leads + conversions</span></div></div>
+      <div class="kc"><div class="kl">Blended CPL</div><div class="kv">$29.26</div><div class="kd"><span class="dot dot-up"></span><span class="up">Active only: ~$22</span></div></div>
+      <div class="kc"><div class="kl">Meta ROI on setup fees</div><div class="kv">7.06x</div><div class="kd"><span class="dot dot-up"></span><span class="up">$118.6K / $16.8K</span></div></div>
+    </div>
+
+    <div class="slabel">Full 2026 campaign spend breakdown</div>
+    <div class="card">
+      <table class="t"><thead><tr><th>Campaign</th><th>Status</th><th>Results</th><th>Spend</th><th>CPR</th><th>Impressions</th><th>Freq</th></tr></thead><tbody>
+        <tr><td style="font-weight:500">Luxury Campaign -1<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Feb 24 · FB pixel lead</span></td><td><span class="pill p-up">Active</span></td><td style="font-weight:500">327</td><td style="font-weight:500">$7,781</td><td>$23.80</td><td>249,620</td><td style="color:#BA7517">2.73</td></tr>
+        <tr><td style="font-weight:500">Rental Campaign -1<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Feb 18 · website conv · inactive</span></td><td><span class="pill p-nt">Inactive</span></td><td>136</td><td style="color:#b83232">$6,936</td><td style="color:#b83232">$51.00</td><td>233,691</td><td style="color:#b83232">3.99</td></tr>
+        <tr><td style="font-weight:500">FAP Campaign -1<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Mar 30 · website conv</span></td><td><span class="pill p-up">Active</span></td><td>24</td><td>$1,058</td><td style="color:#b83232">$44.10</td><td>32,474</td><td>2.20</td></tr>
+        <tr><td style="font-weight:500">Luxury Campaign -2<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Apr 4 · creative testing</span></td><td><span class="pill p-up">Active</span></td><td style="color:#2d8a4e;font-weight:500">45</td><td>$429</td><td style="color:#2d8a4e;font-weight:500">$9.53</td><td>20,112</td><td style="color:#2d8a4e">1.77</td></tr>
+        <tr><td style="font-weight:500">New Zip Codes LP<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Jan 8–20 · archived after 12 days</span></td><td><span class="pill p-nt">Archived</span></td><td>41</td><td>$441</td><td style="color:#2d8a4e">$10.76</td><td>13,203</td><td>1.64</td></tr>
+        <tr><td style="font-weight:500">Luxury Plan Web Lead<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Feb 23 · $116 spend, 0 results</span></td><td><span class="pill p-nt">Inactive</span></td><td>0</td><td style="color:#b83232">$116</td><td>—</td><td>4,554</td><td>1.31</td></tr>
+        <tr><td style="font-weight:500">Rental Campaign -2<br><span style="font-size:11px;font-weight:400;color:var(--color-text-secondary)">Apr 6 · quick test</span></td><td><span class="pill p-nt">Inactive</span></td><td>2</td><td>$63</td><td>$31.60</td><td>2,283</td><td>1.26</td></tr>
+        <tr class="muted"><td style="color:var(--color-text-secondary)">All other campaigns (95+)</td><td><span class="pill p-nt">Inactive</span></td><td>0</td><td>$0</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="slabel">Active ad sets — ranked by CPL</div>
+    <div class="card">
+      <div style="position:relative;width:100%;height:220px;margin-bottom:18px"><canvas id="adsetChart" role="img" aria-label="Bar chart of CPL by ad set"></canvas></div>
+      <table class="t"><thead><tr><th>Ad set</th><th>Status</th><th>Results</th><th>Spend</th><th>CPL</th><th>CPM</th><th>Freq</th></tr></thead><tbody>
+        <tr><td style="font-weight:500">Broad | DFW area (Apr 4)</td><td><span class="pill p-up">Active</span></td><td style="color:#2d8a4e;font-weight:500">39</td><td>$355</td><td style="color:#2d8a4e;font-weight:500">$9.11</td><td>$20.31</td><td>1.71</td></tr>
+        <tr><td style="font-weight:500">Broad | DFW area (Apr 8)</td><td><span class="pill p-up">Active</span></td><td style="color:#2d8a4e">6</td><td>$74</td><td style="color:#2d8a4e">$12.25</td><td>$28.27</td><td>1.22</td></tr>
+        <tr><td style="font-weight:500">Broad | DFW Zip Code #1</td><td><span class="pill p-up">Active</span></td><td style="font-weight:500">143</td><td>$2,188</td><td>$15.30</td><td>$28.21</td><td>2.04</td></tr>
+        <tr><td style="font-weight:500">Broad | North DFW Zip #5</td><td><span class="pill p-up">Active</span></td><td>31</td><td>$916</td><td style="color:#BA7517">$29.54</td><td>$34.35</td><td>2.53</td></tr>
+        <tr><td style="font-weight:500">Broad | Adv+ FAP Video</td><td><span class="pill p-up">Active</span></td><td>24</td><td>$1,057</td><td style="color:#b83232">$44.05</td><td>$32.56</td><td>2.19</td></tr>
+        <tr class="muted"><td style="font-weight:500">Broad | Fort Worth Zip #2</td><td><span class="pill p-nt">Inactive</span></td><td>45</td><td>$1,303</td><td style="color:#b83232">$28.96</td><td>$31.13</td><td>2.28</td></tr>
+        <tr class="muted"><td style="font-weight:500">Broad | IG Video (Feb 18)</td><td><span class="pill p-nt">Not delivering</span></td><td>69</td><td>$4,018</td><td style="color:#b83232">$58.24</td><td>$29.55</td><td>3.08</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="slabel">Winning creative concepts</div>
+    <div class="g3">
+      <div class="card"><div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:7px">TOP PERFORMER</div><div style="font-size:15px;font-weight:500;margin-bottom:5px">You Just Need to Swap</div><div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">Swap-framing removes commitment anxiety. Above-avg engagement and conversion rankings.</div><span class="pill p-up">$9.05 CPL</span></div>
+      <div class="card"><div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:7px">STRONG #2</div><div style="font-size:15px;font-weight:500;margin-bottom:5px">Your Plans Just Got an Upgrade</div><div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">Lifestyle upgrade framing. Aspirational without being transactional.</div><span class="pill p-up">$9.30 CPL</span></div>
+      <div class="card"><div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:7px">WATCH — Apr 8</div><div style="font-size:15px;font-weight:500;margin-bottom:5px">Girl Need Porche</div><div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">Personality-driven copy. $12.25 CPL from cold start. Strong early signal for female audience.</div><span class="pill p-up">$12.25 CPL</span></div>
+    </div>
+
+    <div class="slabel">Account health flags</div>
+    <div class="card">
+      <div class="fr"><div class="fi fi-r">!</div><div><div class="ft">99+ campaigns — 96+ inactive, attribution polluted</div><div class="fb">Campaigns date back to March 2025 across HJR, HF, LS, and HRJ naming prefixes — at least 3 different operators. Archive everything pre-2026 before any capital raise or agency audit.</div></div></div>
+      <div class="fr"><div class="fi fi-r">!</div><div><div class="ft">Rental Campaign -1 burned $6,936 at $51 CPR — worst in account</div><div class="fb">41% of all 2026 Meta spend went to this campaign. Frequency hit 3.99 before it went inactive. No visible post-mortem or replacement strategy documented.</div></div></div>
+      <div class="fr"><div class="fi fi-a">~</div><div><div class="ft">Luxury Campaign -1 frequency at 2.73 — creative fatigue imminent</div><div class="fb">Industry refresh threshold is 3.0. At current trajectory this will degrade CPL within 1–2 weeks. Gio needs replacement creative ready now.</div></div></div>
+      <div class="fr"><div class="fi fi-a">~</div><div><div class="ft">New Zip Codes LP got $10.76 CPL then was archived after 12 days</div><div class="fb">Jan 8–20 campaign, 41 leads, one of the best CPLs in the account. Killed with no explanation. Needs a direct answer from Hamza on why.</div></div></div>
+      <div class="fr"><div class="fi fi-g">+</div><div><div class="ft">April 7 copy direction is working — 3 ads all under $9.50 CPL</div><div class="fb">You Just Need to Swap, Luxury Feels Light, and Your Plans Just Got an Upgrade all launched same day and are all beating every prior creative. Scale this direction immediately.</div></div></div>
+      <div class="fr"><div class="fi fi-g">+</div><div><div class="ft">Meta ROI on setup fees: 7.06x confirmed for 2026 YTD</div><div class="fb">$16,824 spend against $118,612 in setup fee revenue. Strongest channel-level ROI in the business. Clean number to lead with externally.</div></div></div>
+    </div>
+  </div>
+
+  <!-- FLEET -->
+  <div id="sec-fleet" class="sec">
+    <div class="slabel">Fleet overview — 101 vehicles</div>
+    <div class="g3">
+      <div class="kc"><div class="kl">Total fleet</div><div class="kv">101</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">vehicles</span></div></div>
+      <div class="kc"><div class="kl">Max monthly rev potential</div><div class="kv">$159.6K</div><div class="kd"><span class="dot dot-up"></span><span class="up">at 100% utilization</span></div></div>
+      <div class="kc"><div class="kl">Max gross spread</div><div class="kv">~$100K</div><div class="kd"><span class="dot dot-up"></span><span class="up">~63% margin</span></div></div>
+    </div>
+    <div class="slabel">Revenue potential by tier</div>
+    <div class="card"><div style="position:relative;width:100%;height:200px"><canvas id="fleetChart" role="img" aria-label="Bar chart of fleet revenue potential by tier"></canvas></div></div>
+    <div class="slabel">Tier breakdown</div>
+    <div class="card">
+      <table class="t"><thead><tr><th>Tier</th><th>Vehicles</th><th>Max monthly rev</th><th>Gross spread</th><th>Avg spread/vehicle</th></tr></thead><tbody>
+        <tr><td><span class="pill" style="background:#1a1a1a;color:#fff">POSH</span></td><td>23</td><td>$51,428</td><td style="color:#2d8a4e;font-weight:500">~$30,700</td><td>~$900</td></tr>
+        <tr><td><span class="pill p-wn">PLUSH</span></td><td>33</td><td>~$46,000</td><td style="color:#2d8a4e;font-weight:500">~$21,000</td><td>~$635</td></tr>
+        <tr><td><span class="pill" style="background:#E6F1FB;color:#0C447C">LUXURY</span></td><td>45</td><td>~$62,000</td><td style="color:#2d8a4e;font-weight:500">~$18,800</td><td>~$418</td></tr>
+      </tbody></table>
+    </div>
+    <div class="slabel">Brand concentration</div>
+    <div class="card"><div style="position:relative;width:100%;height:240px"><canvas id="brandChart" role="img" aria-label="Stacked bar chart of vehicles per brand by tier"></canvas></div></div>
+    <div class="slabel">Fleet risk items</div>
+    <div class="card">
+      <table class="t"><thead><tr><th>Vehicle</th><th>Issue</th><th>Urgency</th></tr></thead><tbody>
+        <tr><td>Chevrolet Colorado</td><td>Insurance expired — pull from fleet immediately</td><td><span class="pill p-dn">Critical</span></td></tr>
+        <tr><td>Mercedes C-Class</td><td>Registration expired</td><td><span class="pill p-dn">Critical</span></td></tr>
+        <tr><td>2019 BMW X5 (Muhittin Er)</td><td>Negative spread: $778 payment vs $675 sub rate (-$103/mo)</td><td><span class="pill p-dn">Critical</span></td></tr>
+        <tr><td>10 vehicles</td><td>Registrations expired (some since 2025)</td><td><span class="pill p-wn">Urgent</span></td></tr>
+        <tr><td>6 BMW vehicles</td><td>Registrations expiring May/June 2026</td><td><span class="pill p-wn">Action needed</span></td></tr>
+        <tr><td>Deborah L Muhammad</td><td>Holds 11 vehicles (11% of fleet) — concentration risk</td><td><span class="pill p-wn">Monitor</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- FLAGS -->
+  <div id="sec-flags" class="sec">
+    <div class="slabel">Strategic flags</div>
+    <div class="card">
+      <div class="fr"><div class="fi fi-r">!</div><div><div class="ft">2026 revenue tracking -4% YoY</div><div class="fb">Annualized 2026 run rate is $355K vs $370K in 2025. April is tracking to be the worst month since February unless deals close in the final weeks.</div></div></div>
+      <div class="fr"><div class="fi fi-r">!</div><div><div class="ft">36% of 2025 revenue was cash — investor red flag</div><div class="fb">$133K cash in 2025, $31K already in 2026. No audit trail, tax exposure, and a dealbreaker in institutional due diligence. Push all customers to Stripe or ACH.</div></div></div>
+      <div class="fr"><div class="fi fi-r">!</div><div><div class="ft">Uninsured vehicle operating in fleet</div><div class="fb">Chevrolet Colorado insurance is expired. A single incident is a company-ending liability event. Pull it from availability today.</div></div></div>
+      <div class="fr"><div class="fi fi-a">~</div><div><div class="ft">February is a recurring weakness — two years running</div><div class="fb">Feb 2025: $12.9K. Feb 2026: $16K. This is a pattern now. Diagnose before it becomes year three: seasonality, pipeline gap, or sales bandwidth?</div></div></div>
+      <div class="fr"><div class="fi fi-a">~</div><div><div class="ft">April 2026 customer acquisition down 64% vs prior year</div><div class="fb">Only 4 unique customers through April 10 vs 11 in full April 2025. Unless deals close in the remaining days, this accelerates the YoY decline.</div></div></div>
+      <div class="fr"><div class="fi fi-a">~</div><div><div class="ft">Rental Campaign -1 burned $6,936 at $51 CPR with no post-mortem</div><div class="fb">Largest single Meta spend item in 2026. Went inactive with frequency at 3.99. No documented learning or replacement plan from Hamza.</div></div></div>
+      <div class="fr"><div class="fi fi-g">+</div><div><div class="ft">Average setup fee rising — $2,168 to $2,421 (+11.7%)</div><div class="fb">POSH tier average jumped from $3,316 to $4,622. Pricing discipline is improving or customers are selecting higher tiers.</div></div></div>
+      <div class="fr"><div class="fi fi-g">+</div><div><div class="ft">March 2026 was the best single month ever at $51.9K (+285%)</div><div class="fb">What drove it? If replicable, it reverses the full-year trajectory. This is the most important strategic question on the table.</div></div></div>
+      <div class="fr"><div class="fi fi-g">+</div><div><div class="ft">Meta ROI confirmed at 7.06x for 2026 YTD</div><div class="fb">$16,824 spend against $118,612 setup fee revenue. Fundable growth story if paired with clean financials and the right copy direction.</div></div></div>
+    </div>
+  </div>
+
+  <!-- SALES -->
+  <div id="sec-sales" class="sec">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px">
+      <div class="slabel" style="margin:0">Sales — live from Google Sheets</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span id="sheets-status" style="font-size:11px;color:var(--color-text-secondary)">Loading...</span>
+        <button onclick="loadSheets()" class="btn-add" style="padding:5px 11px;font-size:11px">Refresh</button>
+      </div>
+    </div>
+    <div class="kg" id="sales-kpis">
+      <div class="kc"><div class="kl">Combined total</div><div class="kv" id="sk-total">—</div><div class="kd"><span class="dot dot-nt"></span><span class="nt" id="sk-total-sub">loading</span></div></div>
+      <div class="kc"><div class="kl">Hayden</div><div class="kv" id="sk-h">—</div><div class="kd"><span class="dot dot-nt"></span><span class="nt" id="sk-h-sub">—</span></div></div>
+      <div class="kc"><div class="kl">Jessica</div><div class="kv" id="sk-j">—</div><div class="kd"><span class="dot dot-nt"></span><span class="nt" id="sk-j-sub">—</span></div></div>
+      <div class="kc"><div class="kl">Abdul + Others</div><div class="kv" id="sk-a">—</div><div class="kd"><span class="dot dot-up"></span><span class="up" id="sk-a-sub">—</span></div></div>
+      <div class="kc"><div class="kl">Best week</div><div class="kv" id="sk-best">—</div><div class="kd"><span class="dot dot-up"></span><span class="up" id="sk-best-sub">—</span></div></div>
+      <div class="kc"><div class="kl">Weeks tracked</div><div class="kv" id="sk-weeks">—</div><div class="kd"><span class="dot dot-nt"></span><span class="nt">from sheet</span></div></div>
+    </div>
+
+    <div class="slabel">Rep leaderboard</div>
+    <div class="card">
+      <table class="t">
+        <thead><tr><th>Rep</th><th>Membership rev</th><th>Rental rev</th><th>Total</th><th>Share</th></tr></thead>
+        <tbody id="leaderboard-body"><tr><td colspan="5" class="es">Loading...</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="slabel">Weekly total revenue — all reps combined</div>
+    <div class="card">
+      <div style="position:relative;width:100%;height:220px;margin-bottom:16px"><canvas id="salesTotalChart" role="img" aria-label="Bar chart of combined weekly revenue"></canvas></div>
+      <div id="total-table-wrap"><div class="es">Loading...</div></div>
+    </div>
+
+    <div class="slabel">Membership revenue by rep — weekly</div>
+    <div class="card">
+      <div style="position:relative;width:100%;height:220px;margin-bottom:16px"><canvas id="salesMemberChart" role="img" aria-label="Grouped bar chart of membership revenue by rep per week"></canvas></div>
+      <div id="member-table-wrap"><div class="es">Loading...</div></div>
+    </div>
+
+    <div class="slabel">Rental revenue by rep — weekly</div>
+    <div class="card">
+      <div style="position:relative;width:100%;height:220px;margin-bottom:16px"><canvas id="salesRentalChart" role="img" aria-label="Grouped bar chart of rental revenue by rep per week"></canvas></div>
+      <div id="rental-table-wrap"><div class="es">Loading...</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+var SALES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRXHqGJpdGqUAZTPyXwyU7kl8WtnkIPsef36ci3Y6TnBlzHOnQ-m1kUDh1b6oCVTA/pub?gid=912389448&single=true&output=csv';
+var chartInstances = {};
+
+function switchTab(id, el) {
+  document.querySelectorAll('.sec').forEach(function(s){ s.classList.remove('on'); });
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
+  document.getElementById('sec-' + id).classList.add('on');
+  el.classList.add('on');
+  if (id === 'sales') loadSheets();
+}
+
+document.getElementById('rdate').textContent = new Date().toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+
+function parseCSV(text) {
+  return text.trim().split('\n').map(function(row) {
+    return row.split(',').map(function(c){ return c.replace(/^"|"$/g,'').trim(); });
+  });
+}
+function toNum(s){ return parseFloat((s||'0').replace(/[$,\s]/g,''))||0; }
+function fmt(n){ return '$'+Math.round(n).toLocaleString(); }
+function isDataRow(r) {
+  if (!r[0] || !r[0].trim()) return false;
+  var first = r[0].trim();
+  if (first.toLowerCase() === 'week') return false;
+  if (first.toLowerCase().indexOf('grand') !== -1) return false;
+  if (first.toLowerCase().indexOf('revenue') !== -1) return false;
+  if (first.toLowerCase().indexOf('posh') !== -1) return false;
+  if (first.toLowerCase().indexOf('auto-updates') !== -1) return false;
+  if (first.charAt(0) === '\u26a0') return false;
+  return toNum(r[1]) !== 0 || r[1].indexOf('$') !== -1;
+}
+
+function parseSingleTab(rows) {
+  var mem = [], ren = [], tot = [];
+  var section = null;
+  rows.forEach(function(r) {
+    var first = (r[0]||'').trim().toUpperCase();
+    if (first.indexOf('MEMBERSHIP') !== -1) { section = 'mem'; return; }
+    if (first.indexOf('RENTAL') !== -1) { section = 'ren'; return; }
+    if (first.indexOf('TOTAL REVENUE') !== -1) { section = 'tot'; return; }
+    if (!isDataRow(r)) return;
+    if (section === 'mem') mem.push(r);
+    else if (section === 'ren') ren.push(r);
+    else if (section === 'tot') tot.push(r);
+  });
+  return {mem:mem, ren:ren, tot:tot};
+}
+
+function buildStackedChart(id, labels, hData, jData, aData) {
+  if (chartInstances[id]) chartInstances[id].destroy();
+  chartInstances[id] = new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{labels:labels, datasets:[
+      {label:'Hayden', data:hData, backgroundColor:'#1a1a1a', borderRadius:3},
+      {label:'Jessica', data:jData, backgroundColor:'#BA7517', borderRadius:3},
+      {label:'Abdul + Others', data:aData, backgroundColor:'#378ADD', borderRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},color:'#888',boxWidth:10,padding:12}}},
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{font:{size:10},color:'#888'}},
+        y:{stacked:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11},color:'#888',callback:function(v){return '$'+Math.round(v/1000)+'K';}},beginAtZero:true}
+      }
+    }
+  });
+}
+
+function buildTable(wrapId, rows) {
+  var html = '<table class="t"><thead><tr><th>Week</th><th>Hayden</th><th>Jessica</th><th>Abdul + Others</th><th>Combined</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    var combined = toNum(r[4])||(toNum(r[1])+toNum(r[2])+toNum(r[3]));
+    html += '<tr><td>'+r[0]+'</td><td>'+fmt(toNum(r[1]))+'</td><td>'+fmt(toNum(r[2]))+'</td><td>'+fmt(toNum(r[3]))+'</td><td style="font-weight:500">'+fmt(combined)+'</td></tr>';
+  });
+  document.getElementById(wrapId).innerHTML = html+'</tbody></table>';
+}
+
+function loadSheets() {
+  document.getElementById('sheets-status').textContent = 'Refreshing...';
+  fetch(SALES_CSV_URL)
+    .then(function(r){ return r.text(); })
+    .then(function(text) {
+      var rows = parseCSV(text);
+      var sections = parseSingleTab(rows);
+      var mem = sections.mem, ren = sections.ren, tot = sections.tot;
+      if (!tot.length && !mem.length) throw new Error('No data rows found — check sheet structure');
+      var useRows = tot.length ? tot : mem;
+      var labels = useRows.map(function(r){return r[0];});
+      function col(rows,i){return rows.map(function(r){return toNum(r[i]);});}
+
+      var totalH = col(useRows,1).reduce(function(s,v){return s+v;},0);
+      var totalJ = col(useRows,2).reduce(function(s,v){return s+v;},0);
+      var totalA = col(useRows,3).reduce(function(s,v){return s+v;},0);
+      var grand  = totalH+totalJ+totalA;
+      var weekly = useRows.map(function(r){ return toNum(r[4])||(toNum(r[1])+toNum(r[2])+toNum(r[3])); });
+      var bestIdx = weekly.indexOf(Math.max.apply(null,weekly));
+
+      document.getElementById('sk-total').textContent = fmt(grand);
+      document.getElementById('sk-total-sub').textContent = 'all reps · '+useRows.length+' wks';
+      document.getElementById('sk-h').textContent = fmt(totalH);
+      document.getElementById('sk-h-sub').textContent = Math.round(totalH/grand*100)+'% of total';
+      document.getElementById('sk-j').textContent = fmt(totalJ);
+      document.getElementById('sk-j-sub').textContent = Math.round(totalJ/grand*100)+'% of total';
+      document.getElementById('sk-a').textContent = fmt(totalA);
+      document.getElementById('sk-a-sub').textContent = Math.round(totalA/grand*100)+'% of total';
+      document.getElementById('sk-best').textContent = fmt(Math.max.apply(null,weekly));
+      document.getElementById('sk-best-sub').textContent = labels[bestIdx];
+      document.getElementById('sk-weeks').textContent = useRows.length;
+
+      var memH=col(mem.length?mem:useRows,1).reduce(function(s,v){return s+v;},0);
+      var memJ=col(mem.length?mem:useRows,2).reduce(function(s,v){return s+v;},0);
+      var memA=col(mem.length?mem:useRows,3).reduce(function(s,v){return s+v;},0);
+      var renH=col(ren.length?ren:useRows,1).reduce(function(s,v){return s+v;},0);
+      var renJ=col(ren.length?ren:useRows,2).reduce(function(s,v){return s+v;},0);
+      var renA=col(ren.length?ren:useRows,3).reduce(function(s,v){return s+v;},0);
+      var reps=[{n:'Hayden',m:memH,r:renH,t:totalH},{n:'Jessica',m:memJ,r:renJ,t:totalJ},{n:'Abdul + Others',m:memA,r:renA,t:totalA}].sort(function(a,b){return b.t-a.t;});
+      document.getElementById('leaderboard-body').innerHTML = reps.map(function(r,i){
+        return '<tr><td style="font-weight:500">'+r.n+'</td><td>'+fmt(r.m)+'</td><td>'+fmt(r.r)+'</td><td style="font-weight:500'+(i===0?';color:#2d8a4e':'')+'">'+fmt(r.t)+'</td><td><span class="pill '+(i===0?'p-up':'p-nt')+'">'+Math.round(r.t/grand*100)+'%</span></td></tr>';
+      }).join('');
+
+      var mRows = mem.length ? mem : useRows;
+      var rRows = ren.length ? ren : useRows;
+      buildStackedChart('salesTotalChart', labels, col(useRows,1), col(useRows,2), col(useRows,3));
+      buildStackedChart('salesMemberChart', labels, col(mRows,1), col(mRows,2), col(mRows,3));
+      buildStackedChart('salesRentalChart', labels, col(rRows,1), col(rRows,2), col(rRows,3));
+      buildTable('total-table-wrap', useRows);
+      buildTable('member-table-wrap', mRows);
+      buildTable('rental-table-wrap', rRows);
+
+      document.getElementById('sheets-status').textContent = 'Updated '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    })
+    .catch(function(err){
+      document.getElementById('sheets-status').textContent = 'Error loading sheet';
+      console.error(err);
+    });
+}
+
+setTimeout(function(){
+  new Chart(document.getElementById('fleetChart'),{
+    type:'bar',
+    data:{labels:['POSH','PLUSH','LUXURY'],datasets:[
+      {label:'Max monthly rev',data:[51428,46000,62000],backgroundColor:['#1a1a1a','#BA7517','#378ADD'],borderRadius:4},
+      {label:'Gross spread',data:[30700,21000,18800],backgroundColor:['rgba(26,26,26,0.25)','rgba(186,117,23,0.25)','rgba(55,138,221,0.25)'],borderRadius:4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:12},color:'#888'}},y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11},color:'#888',callback:function(v){return '$'+Math.round(v/1000)+'K';}},beginAtZero:true}}}
+  });
+  new Chart(document.getElementById('brandChart'),{
+    type:'bar',
+    data:{
+      labels:['BMW','Toyota','Chevrolet','Cadillac','Tesla','Hyundai','Porsche','Other'],
+      datasets:[
+        {label:'POSH',data:[11,0,1,3,2,0,2,4],backgroundColor:'#1a1a1a',borderRadius:2},
+        {label:'PLUSH',data:[5,4,5,2,1,2,0,14],backgroundColor:'#BA7517',borderRadius:2},
+        {label:'LUXURY',data:[7,22,8,0,0,5,0,3],backgroundColor:'#378ADD',borderRadius:2}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:11},color:'#888'}},y:{stacked:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11},color:'#888',stepSize:5},beginAtZero:true}}}
+  });
+  new Chart(document.getElementById('metaSpendChart'),{
+    type:'bar',
+    data:{
+      labels:['Q1 2025','Q2 2025','Q3 2025','Q4 2025','2026 YTD'],
+      datasets:[{label:'Meta spend',data:[9800,12200,18900,15800,16824],backgroundColor:['#B5D4F4','#B5D4F4','#B5D4F4','#B5D4F4','#1a1a1a'],borderRadius:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return '$'+ctx.parsed.y.toLocaleString();}}}},scales:{x:{grid:{display:false},ticks:{font:{size:11},color:'#888'}},y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11},color:'#888',callback:function(v){return '$'+Math.round(v/1000)+'K';}},beginAtZero:true}}}
+  });
+  new Chart(document.getElementById('adsetChart'),{
+    type:'bar',
+    data:{
+      labels:['DFW (Apr4)','DFW (Apr8)','DFW #1','N.DFW #5','FAP Video','Fort Worth','IG Video'],
+      datasets:[{label:'CPL',data:[9.11,12.25,15.30,29.54,44.05,28.96,58.24],backgroundColor:[9.11,12.25,15.30,29.54,44.05,28.96,58.24].map(function(v){return v<=15?'#2d8a4e':v<=30?'#BA7517':'#b83232';}),borderRadius:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return '$'+ctx.parsed.y.toFixed(2)+' CPL';}}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#888',maxRotation:30}},y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11},color:'#888',callback:function(v){return '$'+v;}},beginAtZero:true}}}
+  });
+},300);
+</script>
